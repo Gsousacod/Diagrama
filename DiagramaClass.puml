@@ -1,0 +1,39 @@
+@startuml DiagramaDeClasse
+    class Livro{
+        + ISBN: string
+        + Título: string
+        + Autor: string
+        + Categoria: string
+        + QtdeDisponível: int
+    }
+    class Emprestimo{
+        + DataEmpréstimo: Date
+        + DataDevolução: Date
+        + DataDevoluçãoReal: Date
+        + Livro: Livro
+        + Membro: Membro
+    }
+    class Membro{
+        + Nome: string
+        + ID: int
+        + Senha: string
+    }
+    class Reserva{
+        + DataReserva: Date
+        + Livro: Livro
+        + Membro: Membro
+    }
+    class Biblioteca{
+        + Livros: List<Livro>
+        + Membros: List<Membro>
+    }
+    class Relatório{
+        + ListaLivrosEmprestados: List<Empréstimo>
+        + HistóricoEmpréstimos: List<Empréstimo>
+        + EstatísticasUso: Estatísticas
+    }
+
+
+@enduml
+
+
