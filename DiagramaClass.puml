@@ -1,39 +1,57 @@
+
 @startuml DiagramaDeClasse
-    class Livro{
-        + ISBN: string
-        + Título: string
-        + Autor: string
-        + Categoria: string
-        + QtdeDisponível: int
-    }
-    class Emprestimo{
-        + DataEmpréstimo: Date
-        + DataDevolução: Date
-        + DataDevoluçãoReal: Date
-        + Livro: Livro
-        + Membro: Membro
-    }
-    class Membro{
-        + Nome: string
-        + ID: int
-        + Senha: string
-    }
-    class Reserva{
-        + DataReserva: Date
-        + Livro: Livro
-        + Membro: Membro
-    }
-    class Biblioteca{
-        + Livros: List<Livro>
-        + Membros: List<Membro>
-    }
-    class Relatório{
-        + ListaLivrosEmprestados: List<Empréstimo>
-        + HistóricoEmpréstimos: List<Empréstimo>
-        + EstatísticasUso: Estatísticas
-    }
+class Livro {
+    + ISBN: string
+    + Título: string
+    + Autor: string
+    + Categoria: string
+    + QtdeDisponível: int
+}
 
+class Empréstimo {
+    + DataEmpréstimo: Date
+    + DataDevolução: Date
+    + DataDevoluçãoReal: Date
+    + registrarEmpréstimo(): void
+    + registrarDevolução(): void
+}
 
+class Membro {
+    + Nome: string
+    + ID: int
+    + Senha: string
+    + fazerReserva(Livro): void
+}
+
+class Reserva {
+    + DataReserva: Date
+    + confirmarReserva(): void
+    - Livro: Livro
+    - Membro: Membro
+}
+
+class Biblioteca {
+    - Livros: List<Livro>
+    - Membros: List<Membro>
+    + emprestarLivro(Livro, Membro): void
+    + devolverLivro(Livro, Membro): void
+}
+
+class Relatório {
+    - ListaLivrosEmprestados: List<Empréstimo>
+    - HistóricoEmpréstimos: List<Empréstimo>
+    - EstatísticasUso: Estatísticas
+    + gerarListaLivrosEmprestados(): List<Livro>
+    + gerarHistóricoEmpréstimos(): List<Empréstimo>
+    + gerarEstatísticasUso(): Estatísticas
+}
+
+Livro --> Empréstimo : "Pode ter"
+Empréstimo --> Membro : "Realizado por"
+Reserva --> Membro : "Realizado por"
+Reserva --> Livro : "Reserva"
+Biblioteca --> Livro : "Possui"
+Biblioteca --> Membro : "Possui"
+Biblioteca --> Empréstimo : "Realiza"
+Relatório --> Empréstimo : "Usa"
 @enduml
-
-
